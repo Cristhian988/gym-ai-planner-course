@@ -4,12 +4,14 @@ import { authClient } from "../lib/auth";
 
 interface AuthContextType {
   user: User | null;
+  isLoading: boolean
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [neonUser, setNeonUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true)
   
   useEffect(() => {
     async function loadUser() {
@@ -22,6 +24,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         }
       } catch (err) {
         setNeonUser(null);
+      }finally{
+        setIsLoading(false)        
       } 
     }
 
@@ -31,7 +35,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
  return (
     <AuthContext.Provider
       value={{
-        user: neonUser }}
+        user: neonUser, isLoading }}
     >
       {children}
     </AuthContext.Provider>
