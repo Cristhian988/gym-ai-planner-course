@@ -68,7 +68,7 @@ export default function Onboarding() {
     }));
   }
 
-  async function handleQuestionnaire(e: React.SubmitEvent<HTMLFormElement>) {
+  async function handleQuestionnaire(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
   }
 
