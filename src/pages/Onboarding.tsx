@@ -50,7 +50,7 @@ const splitOptions = [
 ];
 
 export default function Onboarding() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const [formData, setFormData] = useState({
     goal: "bulk",
     experience: "intermediate",
@@ -72,7 +72,7 @@ export default function Onboarding() {
     e.preventDefault();
   }
 
-  if (!user) {
+  if (!user && !isLoading) {
     return <RedirectToSignIn />;
   }
 
