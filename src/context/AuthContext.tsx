@@ -1,5 +1,5 @@
 import {createContext,useEffect,useState,useContext, type ReactNode} from "react";
-import type { TrainingPlan, User, UserProfile } from "../types";
+import type { User } from "../types";
 import { authClient } from "../lib/auth";
 
 interface AuthContextType {
