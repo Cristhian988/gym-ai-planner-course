@@ -16,11 +16,6 @@ async function post(path: string, body: object) {
     return res.json();
 }
 
-async function get(path: string) {
-    const res = await fetch(`${BASE_URL}/api${path}`)
-    return res.json()
-}
-
 export const api = {
     saveProfile: (
         userId: string,

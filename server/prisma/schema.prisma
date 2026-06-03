@@ -12,14 +12,28 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Goal {
+  cut
+  bulk
+  recomp
+  strength
+  endurance
+}
+
+enum Experience {
+  beginner
+  intermediate
+  advanced
+}
+
 model user_profile {
   user_id         String   @id @db.Uuid
-  goal            String   @db.VarChar(20)
-  experience      String   @db.VarChar(20)
+  goal            Goal
+  experience      Experience
   days_per_week   Int
   session_length  Int
-  equipment       String   @db.VarChar(20)
+  equipment       String   `@db.VarChar`(20) // consider enum as well
   injuries        String?
-  preferred_split String   @db.VarChar(20)
+  preferred_split String   `@db.VarChar`(20) // consider enum as well
   updated_at      DateTime @default(now()) @db.Timestamptz(6)
 }

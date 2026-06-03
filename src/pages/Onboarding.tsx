@@ -81,7 +81,14 @@ export default function Onboarding() {
     injuries: formData.injuries || undefined,
     preferredSplit: formData.preferredSplit as UserProfile['preferredSplit']
     }
-    saveProfile(profile)
+
+    try {
+      await saveProfile(profile);
+      // navigate to next step / show success
+    } catch (err) {
+      console.error("Failed to save profile", err);
+      // surface an error to the user
+    }
   }
 
   if (!user && !isLoading) {

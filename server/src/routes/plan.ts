@@ -1,3 +1,3 @@
-import { Router, type Request, type Response } from 'express';
+import { Router } from 'express';
 
 export const planRouter = Router();

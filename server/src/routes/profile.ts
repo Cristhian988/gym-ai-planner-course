@@ -5,7 +5,6 @@ export const profileRouter: RouterType = Router();
 
 profileRouter.post('/', async (req: Request, res: Response) => {
   try {
-    console.log("Cuerpo recibido:", req.body);
     const { userId, ...profileData } = req.body;
 
     if (!userId) {
