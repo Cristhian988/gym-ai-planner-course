@@ -1,9 +1,11 @@
-import { Router, type Request, type Response } from 'express';
+import { Router, type Request, type Response, type Router as RouterType } from 'express';
+import { prisma } from '../lib/prisma.js';
 
-export const profileRouter = Router();
+export const profileRouter: RouterType = Router();
 
-profileRouter.get('/', async (req: Request, res: Response) => {
+profileRouter.post('/', async (req: Request, res: Response) => {
   try {
+    console.log("Cuerpo recibido:", req.body);
     const { userId, ...profileData } = req.body;
 
     if (!userId) {
@@ -30,6 +32,32 @@ profileRouter.get('/', async (req: Request, res: Response) => {
     ) {
       return res.status(400).json({ error: "Missing required fields" });
     }
+
+    await prisma.user_profile.upsert({
+      where: { user_id: userId },
+      update: {
+        goal,
+        experience,
+        days_per_week: daysPerWeek,
+        session_length: sessionLength,
+        equipment,
+        injuries: injuries || null,
+        preferred_split: preferredSplit,
+        updated_at: new Date(),
+      },
+      create: {
+        user_id: userId,
+        goal,
+        experience,
+        days_per_week: daysPerWeek,
+        session_length: sessionLength,
+        equipment,
+        injuries: injuries || null,
+        preferred_split: preferredSplit,
+      }
+    })
+
+    res.json({ success: true })
   } catch (error) {
     console.error("Error saving profile:", error);
     res.status(500).json({ error: "Failed to save profile" });
